@@ -1,3 +1,4 @@
+var eventproxy = require('eventproxy');
 var express = require('express');
 var cheerio = require('cheerio');
 var superagent = require('superagent');
@@ -5,25 +6,20 @@ var app = express();
 // 启动：node app.js
 
 var targetUrl = 'https://cnodejs.org';
-app.get('/', function(req, res, next){
-    // console.log(req);
-    // 用superagent抓取网页内容
+app.get('/', function(req, res){
     superagent.get(targetUrl)
     .end(function (err, sres){
         // 常规的错误处理
         if(err){
             return next(err);
         }
-
-        // sres.text 里面存储着网页的 html 内容，将它传给 cheerio.load 之后
-        // 就可以得到一个实现了 jquery 接口的变量，我们习惯性地将它命名为 `$`
-        // 剩下就都是 jquery 的内容了
         var $ = cheerio.load(sres.text);
         var items = [];
+        var topicUrls = []; //存储每个页面地址，后续抓取页面详情使用
         $('#topic_list .cell').each(function (index, element) {
             var $element = $(element);
+            var href = targetUrl + $(element).find('.topic_title').attr('href');
             var title = $(element).find('.topic_title').attr('title');
-            var href = $(element).find('.topic_title').attr('href');
             var visits = trim($(element).find('.count_of_visits').text());
             var replies = trim($(element).find('.count_of_replies').text());
             items.push({
@@ -32,9 +28,37 @@ app.get('/', function(req, res, next){
                 views: visits,
                 replies: replies
             });
+
+            topicUrls.push(href);
         });
 
-        res.send(items);
+        var ep = new eventproxy();
+
+        // 循环抓取每一个页面的详细内容
+        topicUrls.forEach(function(topicUrl){
+            superagent.get(topicUrl).end(function(err, res){
+                console.log('fetch ' + topicUrl + ' successful');
+                ep.emit('topic_html', [topicUrl, res.text]);
+            });
+        });
+
+        // 获取每个页面的第一条comment
+        ep.after('topic_html', topicUrls.length, function(topics){
+            items = topics.map(function (topicPair, index){
+                var topicHtml= topicPair[1];
+                var $ = cheerio.load(topicHtml);
+                var firstComment = $('.reply_content').eq(0).text().trim();
+                return ({
+                    title: items[index].title,
+                    href: items[index].href,
+                    views: items[index].views,
+                    replies: items[index].replies,
+                    firstComment: firstComment
+                });
+            });
+            res.send(items);
+            console.log(items);
+        });
     });
 });
 
