@@ -1,0 +1,42 @@
+[
+    {
+        "title": "2017 年学习 React + Redux 的一些建议",
+        "url": "www.w3cplus.com/react/tips-to-learn-react-redux.html"
+    },
+    {
+        "title": "浅谈前端状态管理",
+        "url": "www.w3cplus.com/javascript/talk-about-front-end-state-management.html"
+    },
+    {
+        "title": "Web前端的状态管理",
+        "url": "www.w3cplus.com/react/state-management-of-the-web-front-end.html"
+    },
+    {
+        "title": "更合理的 setState",
+        "url": "www.w3cplus.com/react/more-reasonable-setstate.html"
+    },
+    {
+        "title": "从零学习React技术栈：React 新版本及 ES6 简介",
+        "url": "www.w3cplus.com/react/react-learn-1-1.html"
+    },
+    {
+        "title": "掌握这5大核心概念，你就理解了React",
+        "url": "www.w3cplus.com/react/the-5-things-you-need-to-know-to-understand-react.html"
+    },
+    {
+        "title": "React.js小书：优化 DOM 操作",
+        "url": "www.w3cplus.com/react/optimize-DOM-operations.html"
+    },
+    {
+        "title": "React.js小书：从一个简单的例子讲起",
+        "url": "www.w3cplus.com/react/react-js-book-let-us-start-with-a-simple-example.html"
+    },
+    {
+        "title": "从零学习 React 技术栈系列教程",
+        "url": "www.w3cplus.com/react/react-learn-1.html"
+    },
+    {
+        "title": "编写模块化的CSS:CSS文件组织结构",
+        "url": "www.w3cplus.com/css/css-architecture-3.html"
+    }
+]
