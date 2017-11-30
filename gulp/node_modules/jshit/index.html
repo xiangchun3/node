@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jShit</title>
+  </head>
+  <body>
+
+    <ul class="list">
+      <li>I</li>
+      <li>Will</li>
+      <li>Be</li>
+      <li>Replaced</li>
+      <li>Yah</li>
+    </ul>
+
+    <script src="./jShit.min.js"></script>
+    <script>
+      setTimeout(function() {
+        dom($('.list')).find('li').each(function (el) {
+          el.innerHTML = 'Done!'
+        })
+      }, 1000)
+
+
+    </script>
+  </body>
+</html>
