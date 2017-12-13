@@ -1,0 +1,8 @@
+body{
+    background: #efefef;
+}
+.main {
+    /* Reference an image file */
+    background: #efefef;
+    color: red;
+}
